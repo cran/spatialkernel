@@ -1,0 +1,8 @@
+useDynLib(spatialkernel)
+
+export(package.version, metre, risk.colors, filled.contour.poly)
+export(areapoly, pinpoly)
+export(setkernel, cvloglk, phat, mcseg.test)
+export(mcpat.test)
+export(spseg, plotcv, plotphat, plotmc)
+export(kinhat, lambdahat)

@@ -1,0 +1,479 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html style="direction: ltr;" lang="en-gb">
+<head>
+
+  <meta content="text/html;charset=ISO-8859-1" http-equiv="Content-Type">
+  <title>Kernel Smoothing in Spatialkernel</title>
+
+
+  <meta content="Pingping Zheng" name="author">
+
+  <meta content="Decribe some kernel smoothing methods implemented in R package Spatialkernel" name="description">
+
+</head>
+
+
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);" alink="#000099" link="#000099" vlink="#990099">
+
+<center><font size="5"><b>Kernel Smoothing
+in&nbsp;<code>Spatialkernel</code></b></font></center>
+
+<hr size="1"><a name="index"></a>
+<ul>
+
+  <a href="#smppp"><li>Spatial Multivariate Poisson
+Point Process<br>
+
+  </li>
+
+  </a><a href="#kre"><li>Kernel Regression
+Estimation<br>
+
+  </li>
+
+  </a><a href="#cvloglk"><li>Bandwidth
+Selection<br>
+
+  </li>
+
+  </a><a href="#seg"><li>Spatial Segregation<br>
+
+  </li>
+
+  </a><a href="#temp"><li>Temporal Changes<br>
+
+  </li>
+
+  </a><a href="#intensity"><li>Intensity
+Estimation of
+Inhomogeneous Poisson Point Process<br>
+
+  </li>
+
+  </a><a href="#example"><li>An example: The
+Lansing Woods Tree Data</li>
+
+  </a>
+  <ul>
+
+    <li><a href="#exdist">Spatial distribution</a></li>
+
+    <li><a href="#exprob">Estimated type-specific
+probabilities</a></li>
+
+    <li><a href="#excontour">Contour lines of
+pointwise segregation test</a></li>
+
+    <li><a href="#exk">Estimated&nbsp;intensity
+and inhomogeneous K function</a></li>
+
+  </ul>
+
+  <a href="#refs"><li>References</li>
+
+  </a><a href="#down"><li>Downloads</li>
+
+  </a>
+</ul>
+
+<hr size="1">
+<p>This web page tries to illustrate the kernel smoothing methods
+implemented and other useful functions for spatial point patterns
+analysis in the <code>R</code> package <code>Spatialkernel</code>.
+Two kinds of&nbsp;kernel smoothing methods are implemented in the <code>R</code>
+package <code>Spatialkernel</code>,&nbsp;kernel
+regression estimate of the <span style="font-style: italic;">type-specific
+probabilities</span>
+in a&nbsp;multivariate Poisson point process and kernel density
+estimate of the intensity function of an inhomogeneous Poisson point
+process with <em>edge-correction</em> algorithm
+implemented against an
+arbitrary polygon area. An example also gives a brief application of
+the functionality in the package.</p>
+
+<p>If you cannot view this web page properly, please download a
+pdf version of this page from Section <a href="#down">Downloads</a>.<br>
+
+</p>
+
+<p><a name="smppp"><b>Spatial Multivariate
+Poisson Point Process</b><br>
+
+</a><br>
+
+The&nbsp;multivariate point process we discussed here is a
+inhomogeneous Poisson
+process that generates points in two-dimensional space with each point
+marked with one of several categorical types. The data&nbsp;are a
+partial realisation of the&nbsp;Poisson point process
+with&nbsp;categorical component processes being stochastically
+independent.&nbsp;Data of this kind are
+usually
+denoted as (<span style="font-style: italic;">x</span><sub style="font-style: italic;">i</sub><span style="font-style: italic;">, m</span><sub style="font-style: italic;">i</sub>), where <span style="font-style: italic;">x</span><sub style="font-style: italic;">i</sub> are the spatial
+locations and <span style="font-style: italic;">m</span><sub style="font-style: italic;">i</sub> are the
+marked categorical types, within a study area of <span style="font-style: italic;">A</span>. Without losing
+generalization, we suppose <span style="font-style: italic;">m<sub>i</sub></span>
+= 1, 2, &hellip; ,&nbsp; and <span style="font-style: italic;">m<sub>i</sub>
+= k</span>
+means that
+the point at spatial location <span style="font-style: italic;">x</span><sub style="font-style: italic;">i</sub> is of <span style="font-style: italic;">k</span>th category of
+types.</p>
+
+<p>Spatial segregation exists if particular types of
+points
+predominate in particular regions in the study area. Spatial
+segregation effects can be describe in terms of the component intensity
+functions <span style="font-style: italic;">&lambda;</span><sub style="font-style: italic;">k</sub>(<span style="font-style: italic;">x</span>). If <span style="font-style: italic;">&lambda;</span><sub style="font-style: italic;">j</sub>(<span style="font-style: italic;">x</span>) &frasl; <span style="font-style: italic;">&lambda;</span><sub style="font-style: italic;">k</sub>(<span style="font-style: italic;">x</span>) = &rho;<span style="font-style: italic;"></span><span &#961;=""><sub style="font-style: italic;">ij</sub>
+is a constant,
+then no spatial segregation exists,&nbsp;different
+categorical type of data points are randomly intermingled. </span></p>
+
+<p>For the purpose of spatial
+segregation analysis, we do not have to estimate&nbsp;the component
+intensity functions. We introduce the <span style="font-style: italic;">type-specific probabilities</span>,
+<span style="font-style: italic;">p</span><sub style="font-style: italic;">k</sub>(<span style="font-style: italic;">x</span>) = <span style="font-style: italic;">&lambda;</span><sub style="font-style: italic;">k</sub>(<span style="font-style: italic;">x</span>) &frasl;
+&sum;<sub style="font-style: italic;">j</sub><span style="font-style: italic;">&lambda;</span><sub style="font-style: italic;">j</sub>(<span style="font-style: italic;">x</span>),&nbsp;the
+conditional probability that we know a point is at
+location <span style="font-style: italic;">x</span>,
+that point is of <span style="font-style: italic;">k</span>th
+categorical type with probability<span style="font-style: italic;">
+</span><span style="font-style: italic;">p</span><sub style="font-style: italic;">k</sub>(<span style="font-style: italic;">x</span>). Therefore, the
+null hypothesis of no
+segregation can
+be described as <span style="font-style: italic;">p</span><sub style="font-style: italic;">k</sub>(<span style="font-style: italic;">x</span>) = <span style="font-style: italic;">p</span><sub style="font-style: italic;">k</sub><span style="font-style: italic;"></span>,&nbsp;a
+constant.<b>
+</b></p>
+
+<p><a name="kre"><span style="font-weight: bold;">Kernel
+Regression Estimation</span><br>
+
+<br>
+
+A kernel regression
+estimator is adapted&nbsp;to estimate the type-specific
+probabilities,</a></p>
+
+<p style="text-align: center;"><span style="font-style: italic;">p</span><sub style="font-style: italic;">k</sub>(<span style="font-style: italic;">x</span>)
+=&nbsp;&sum;<sub style="font-style: italic;">j</sub><span style="font-style: italic;"> w</span><sub style="font-style: italic;">h</sub>(<span style="font-style: italic;">x - x<sub>j</sub></span>)
+<span style="font-style: italic;">I</span>(<span style="font-style: italic;">m<sub>j</sub> = k</span>)
+&frasl; &sum;<sub style="font-style: italic;">j</sub><span style="font-style: italic;"> w</span><sub style="font-style: italic;">h</sub>(<span style="font-style: italic;">x - x<sub>j</sub></span>),</p>
+
+<p style="text-align: left;">where&nbsp;<span style="font-style: italic;">w</span><sub style="font-style: italic;">h</sub>(<span style="font-style: italic;">x</span>) = <span style="font-style: italic;">w</span>(<span style="font-style: italic;">x</span>
+&frasl;&nbsp;<span style="font-style: italic;">h</span>)
+&frasl; <span style="font-style: italic;">h</span><sup>2</sup>,
+<span style="font-style: italic;">w</span>(<span style="font-style: italic;">x</span>)&nbsp;is
+a standard kernel function, <span style="font-style: italic;">I</span>
+is the indicator function. Note that we use&nbsp; <span style="font-style: italic;">p</span><sub style="font-style: italic;">k</sub>(<span style="font-style: italic;">x</span>)&nbsp;for
+both&nbsp;variables and their estimators. Without causing
+confusion,&nbsp;we
+will use the same notations for both variables and their estimators
+thereafter.</p>
+
+<p style="text-align: left;"><a name="cvloglk"></a><span style="font-weight: bold;">Bandwidth Selection</span></p>
+
+<p style="text-align: left;">We proposed to select a
+bandwidth for the kernel regression by
+maximizing the cross-validated log-likelihood function based on the <span style="font-style: italic;">leave-one-out</span>
+type-specific probability estimator at data points<span style="font-style: italic;"></span>,</p>
+
+<p style="text-align: center;"><span style="font-style: italic;">p</span><sub style="font-style: italic;">k</sub><sup>(<span style="font-style: italic;">i</span>)</sup>(<span style="font-style: italic;">x<sub>i</sub></span>)
+= &sum;<sub style="font-style: italic;">j</sub>&ne;<sub style="font-style: italic;">i</sub><span style="font-style: italic;"> w</span><sub style="font-style: italic;">h</sub>(<span style="font-style: italic;">x<sub>i</sub> - x<sub>j</sub></span>)
+<span style="font-style: italic;">I</span>(<span style="font-style: italic;">m</span><sub style="font-style: italic;">j</sub><span style="font-style: italic;"> = k</span>) &frasl;
+&sum;<sub style="font-style: italic;">j</sub>&ne;<sub style="font-style: italic;">i</sub><span style="font-style: italic;"> w</span><sub style="font-style: italic;">h</sub>(<span style="font-style: italic;">x<sub>i </sub>- x<sub>j</sub></span>).</p>
+
+<p style="text-align: left;"><a name="seg"></a><span style="font-weight: bold;">Spatial Segregation</span>&nbsp;</p>
+
+<p style="text-align: left;">Simulations for the Monte
+Carlo spatial segregation test
+are&nbsp;sampled by randomly re-labelling of the categorical marks
+whilst preserving the observed number of points of each categorical
+type.
+Pointwise segregation test also being carried out&nbsp;to mark the
+areas where the estimated type-specific probabilities are significantly
+greater or smaller than the spatial average. The test statistics chosen
+is a
+measurement of the total deviance of estimated type-specific
+probabilities from their typewise mean values,</p>
+
+<p style="text-align: center;"><span style="font-style: italic;">T</span> = &sum;<sub style="font-style: italic;">k </sub>&sum;<sub style="font-style: italic;">j</sub> (<span style="font-style: italic;">p</span><sub style="font-style: italic;">k</sub><sup><span style="font-style: italic;"></span></sup>(<span style="font-style: italic;">x<sub>j</sub></span>)
+- <span style="text-decoration: line-through;"></span><span style="font-style: italic;">p</span><sub style="font-style: italic;">k</sub><sup>(.<span style="font-style: italic;"></span>)</sup><span style="font-style: italic;"></span>)&sup2;,</p>
+
+<p style="text-align: left;"><span style="font-style: italic;"></span>where&nbsp;<span style="font-style: italic;"></span><span style="font-style: italic;">p</span><sub style="font-style: italic;">k</sub><sup>(.<span style="font-style: italic;"></span>)</sup><span style="font-style: italic;"></span> is the mean of <span style="font-style: italic;">p</span><sub style="font-style: italic;">k</sub><sup><span style="font-style: italic;"></span></sup>(<span style="font-style: italic;">x<sub>j</sub></span>)
+over those <span style="font-style: italic;">j </span>where
+<span style="font-style: italic;">m</span><sub style="font-style: italic;">j</sub><span style="font-style: italic;"> = k</span><span style="font-style: italic;">.</span></p>
+
+<p style="text-align: left;"><span style="font-style: italic;"><a name="temp"></a></span><span style="font-weight: bold;">Temporal Changes</span></p>
+
+<p style="text-align: left;">Spatial segregation analysis
+can
+be&nbsp;generalized to multivariate spatial-temporal Poisson point
+process where each point is marked with a time group (time-period)
+sequence number. For the spatial-temporal point process, the data are
+denoted as&nbsp;(<span style="font-style: italic;">x</span><sub style="font-style: italic;">i</sub><span style="font-style: italic;">, m</span><sub style="font-style: italic;">i</sub>, <span style="font-style: italic;">t</span><sub style="font-style: italic;">i</sub>), where <span style="font-style: italic;">x</span><sub style="font-style: italic;">i</sub> are the spatial
+locations,&nbsp;<span style="font-style: italic;">m</span><sub style="font-style: italic;">i</sub> are the
+marked categorical types, and <span style="font-style: italic;">t</span><sub style="font-style: italic;">i</sub> are the
+time-periods. The spatial locations are within a study area of <span style="font-style: italic;">A</span>. </p>
+
+<p style="text-align: left;">Within each time-period, we
+can estimate
+the type-specific probabilities using kernel regression methods with a
+common bandwidth selected by the cross-validated log-likelihood
+functions pooled over time-periods. The kernel regression estimator of
+thetype-specific probabilities within each time-period is </p>
+
+<p style="text-align: center;"><span style="font-style: italic;">p</span><sub style="font-style: italic;">k</sub>(<span style="font-style: italic;">x</span>, <span style="font-style: italic;">t</span>) = &sum;<sub style="font-style: italic;">j</sub><span style="font-style: italic;"> w</span><sub style="font-style: italic;">h</sub>(<span style="font-style: italic;">x - x<sub>j</sub></span>)
+<span style="font-style: italic;">I</span>(<span style="font-style: italic;">m<sub>j</sub>
+= k</span>) <span style="font-style: italic;">I</span>(<span style="font-style: italic;">t</span><sub style="font-style: italic;">j&nbsp;</sub>= <span style="font-style: italic;">t</span>)&nbsp;&frasl;
+(&sum;<sub style="font-style: italic;">j</sub><span style="font-style: italic;"> w</span><sub style="font-style: italic;">h</sub>(<span style="font-style: italic;">x - x<sub>j</sub></span>)
+<span style="font-style: italic;">I</span>(<span style="font-style: italic;">t</span><sub style="font-style: italic;">j&nbsp;</sub>= <span style="font-style: italic;">t</span>)).</p>
+
+<p style="text-align: left;">The null hypothesis
+of&nbsp;the temporal
+changes&nbsp;over time-periods is that the spatial patterns of the
+type-specific probability surfaces of each categorical type will not
+change over time-periods, that is, <span style="font-style: italic;">p</span><sub style="font-style: italic;">k</sub>(<span style="font-style: italic;">x</span>, <span style="font-style: italic;">t</span>) =&nbsp;<span style="font-style: italic;">p</span><sub style="font-style: italic;">k</sub>(<span style="font-style: italic;">x</span><span style="font-style: italic;"></span>), which is
+constant with respect to the time-periods <span style="font-style: italic;">t</span>. The test
+statistics adopted is</p>
+
+<p style="text-align: center;"><span style="font-style: italic;">P</span>&nbsp;=
+&sum;<sub style="font-style: italic;">t</sub>
+&sum;<sub style="font-style: italic;">k </sub>&sum;<sub style="font-style: italic;">j</sub> (<span style="font-style: italic;">p</span><sub style="font-style: italic;">k</sub><sup><span style="font-style: italic;"></span></sup>(<span style="font-style: italic;">x<sub>j</sub></span>,
+<span style="font-style: italic;">t</span>) - <span style="text-decoration: line-through;"></span><span style="font-style: italic;">p</span><sub style="font-style: italic;">k</sub><sup>(.<span style="font-style: italic;"></span>)</sup><span style="font-style: italic;"></span>(<span style="font-style: italic;">x<sub>j</sub></span>))&sup2;,</p>
+
+<p style="text-align: left;">where <span style="font-style: italic;">p</span><sub style="font-style: italic;">k</sub><sup>(.<span style="font-style: italic;"></span>)</sup><span style="font-style: italic;"></span>(<span style="font-style: italic;">x<sub>j</sub></span>)
+is the mean of&nbsp;<span style="font-style: italic;">p</span><sub style="font-style: italic;">k</sub><span style="font-style: italic;"></span>(<span style="font-style: italic;">x<sub>j</sub></span>,
+<span style="font-style: italic;">t</span>) over
+time-period <span style="font-style: italic;">t</span>.
+The simulations are sampled from the <span style="font-style: italic;"></span>type-specific
+probability surfaces,&nbsp;<span style="font-style: italic;">p</span><sub style="font-style: italic;">k</sub><sup>(.<span style="font-style: italic;"></span>)</sup><span style="font-style: italic;"></span>(<span style="font-style: italic;">x<sub>j</sub></span>),
+which are the approximate <span style="font-style: italic;">true&nbsp;</span>type-specific
+probability surfaces under the null hypothesis of no temporal changes
+over time-periods, preserving the number of points in each time-period.</p>
+
+<p style="text-align: left;"><a name="intensity"></a><span style="font-weight: bold;">Intensity Estimation of
+Inhomogeneous Poisson Point Process</span></p>
+
+<p style="text-align: left;">The intensity function of the
+inhomogeneous spatial Poisson point process can be estimated by the
+kernel density estimator,</p>
+
+<p style="text-align: center;"><span style="font-style: italic;">&lambda;</span>(<span style="font-style: italic;">x</span>)<span style="font-style: italic;"> = </span>&sum;<sub style="font-style: italic;">j</sub><span style="font-style: italic;"> w</span><sub style="font-style: italic;">h</sub>(<span style="font-style: italic;">x - x<sub>j</sub></span>)
+&frasl; <span style="font-style: italic;">a</span><sub style="font-style: italic;">h</sub>(<span style="font-style: italic;">x</span>),</p>
+
+<p style="text-align: left;">where <span style="font-style: italic;">a</span><sub style="font-style: italic;">h</sub>(<span style="font-style: italic;">x</span>) = &int;<sub>A</sub><span style="font-style: italic;"> w</span><sub style="font-style: italic;">h</sub>(<span style="font-style: italic;">u - x</span>) <span style="font-style: italic;">du</span> is the
+edge-correction adjustment factor<span style="font-style: italic;">,</span>
+proposed&nbsp;by Berman and Diggle (1989).&nbsp;</p>
+
+<a name="example"></a><span style="font-weight: bold;">An example: The
+Lansing Woods Tree Data</span><span style="font-weight: bold;"></span><br>
+
+<br>
+
+We use the Lansing Woods tree data to illustrate the basic usages of
+the
+functionality in the <code>R</code> package <code>spatialkernel</code>.
+We present the spatial distribution of the three different kind of
+trees in an arbitrary polygonal area, the estimated type-specific
+probabilities and the estimation of spatial segregation. We also
+present the estimated intensity for&nbsp;overall threes with
+edge-correction applied against the polygon boundary. Both the kernel
+regression estimation of the type-specific
+probabilities and kernel density estimation of the overall intensity
+use <span style="font-style: italic;">Gaussian</span>
+kernel.<br>
+
+<br>
+
+<span style="font-weight: bold;"><a name="exdist"></a>Spatial
+distribution</span>
+of the Lansing Woods trees in an arbitrary polygonal area<br>
+
+<div style="text-align: center;"><a href="lansing.jpeg"><img style="border: 0px solid ; width: 320px; height: 320px;" alt="spatial distribution" src="lansing.jpeg" align="top"></a><br>
+
+The Lansing Woods tree data we
+used&nbsp;consist&nbsp;of&nbsp;oak,
+hickory and maple trees, confined within a arbitrary polygonal area. <br>
+
+<div style="text-align: left;"><span style="font-weight: bold;"><br>
+
+<a name="exprob"></a>
+Estimated type-specific probabilities<br>
+
+<br>
+
+</span>
+<div style="text-align: left;"><span style="font-weight: bold;"></span>
+<table style="width: 100%; text-align: left; margin-left: auto; margin-right: auto;" border="0" cellpadding="0" cellspacing="0">
+
+  <tbody>
+
+    <tr>
+
+      <td><span style="font-weight: bold;"><a href="phat1.jpeg"><img style="border: 0px solid ; width: 320px; height: 320px; float: left;" alt="type-specific probability for oak" src="phat1.jpeg"></a></span></td>
+
+      <td><a href="phat1.jpeg"><span style="font-weight: bold;"></span></a><a href="phat2.jpeg"><img style="border: 0px solid ; width: 320px; height: 320px; float: left;" alt="type-psecific probability for hickory" src="phat2.jpeg"></a></td>
+
+      <td><a href="phat3.jpeg"><img style="border: 0px solid ; width: 320px; height: 320px; float: left;" alt="type-specific probability for maple" src="phat3.jpeg"></a></td>
+
+    </tr>
+
+  </tbody>
+</table>
+
+<span style="font-weight: bold;"><br>
+
+</span>The estimated type-specific probability surfaces show
+obvious
+spatial segregation. Each estimated type-specific probability surface
+shows spatial variations over the polygonal area. This is confirmed in
+the spatial segregation test below. &nbsp; <br>
+
+<span style="font-weight: bold;"><span style="font-weight: bold;"></span><br>
+
+</span></div>
+
+<span style="font-weight: bold;">
+</span></div>
+
+</div>
+
+<span style="font-weight: bold;"><a name="excontour"></a>Contour
+lines of
+pointwise spatial segregation test</span> <br>
+
+<br>
+
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+
+  <tbody>
+
+    <tr>
+
+      <td><a href="mc1.jpeg"><img style="border: 0px solid ; width: 320px; height: 320px;" alt="significance lines for oak" src="mc1.jpeg" align="middle"></a></td>
+
+      <td><a href="mc2.jpeg"><img style="border: 0px solid ; width: 320px; height: 320px;" alt="significance contour lines for hickory" src="mc2.jpeg" align="middle"></a></td>
+
+      <td><a href="mc3.jpeg"><img style="border: 0px solid ; width: 320px; height: 320px;" alt="significance contour lines for maple" src="mc3.jpeg" align="middle"></a></td>
+
+    </tr>
+
+  </tbody>
+</table>
+
+<br>
+
+The&nbsp;Monte Carlo spatial segregation test gives a p-value of
+0.001
+in 999 simulations, which clearly reject the null hypothesis of no
+segregation. The contour lines show the areas where the estimated
+type-specific probabilities are significant great than the average
+(labelled with 0.025) and areas&nbsp;where the estimated
+type-specific
+probabilities are significant smaller&nbsp;than the average
+(labelled
+with 0.0975). <br>
+
+<br>
+
+<span style="font-weight: bold;"><a name="exk"></a>Estimated
+intensity&nbsp;</span><span style="font-weight: bold;">and
+inhomogeneous K function<br>
+
+<br>
+
+</span>We use the kernel density method to estimate<span style="font-weight: bold;">&nbsp;</span>the
+univariate point process of overall trees and then estimate the
+inhomogeneous K function.<br>
+
+<br>
+
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+
+  <tbody>
+
+    <tr>
+
+      <td><a href="lam.jpeg"><img style="border: 0px solid ; width: 320px; height: 320px;" alt="intensity function" src="lam.jpeg" align="middle"></a></td>
+
+      <td><a href="kin.jpeg"><img style="border: 0px solid ; width: 320px; height: 320px;" alt="inhomogeneous K function" src="kin.jpeg" align="middle"></a></td>
+
+    </tr>
+
+  </tbody>
+</table>
+
+<span style="font-weight: bold;"></span><br>
+
+The edge-correction method proposed by Berman and Diggle (1989)
+is&nbsp;applied. The kernel density estimate of the overall
+intensity
+uses the same bandwidth selected by the cross-validated log-likelihood
+function in the type-specific probabilities. The estimate of the
+inhomogeneous K function use the estimated overall intensity.<br>
+
+Caution should be taken when estimate the inhomogeneous K function and
+the intensity using the same data. See Diggle, P.J. <span style="font-style: italic;">et al</span> (2006) for
+a cautious note. <br>
+
+<br>
+
+<a name="refs"></a><span style="font-weight: bold;">References<br>
+
+</span>
+<ul>
+
+  <li>M. Berman and P.J. Diggle (1989) Estimating weighted
+integrals of the second-order intensity of a spatial point process, <span style="font-style: italic;">J. R. Stat. Soc, B</span>,
+    <span style="font-weight: bold;">51</span>,
+81&ndash;92.</li>
+
+  <li>Kelsall, J.E. and Diggle, P.J. (1998) Spatial variation in
+risk: a nonparametric binary regression approach, <span style="font-style: italic;">Applied Statistics</span>,
+    <span style="font-weight: bold;">47</span>,
+559&ndash;573.</li>
+
+  <li>Baddeley, A.J., M&oslash;ller, J. and Waagepetersen, R.
+(2000) Non and
+semi-parametric estimation of interaction in inhomogeneous point
+patterns, <span style="font-style: italic;">Statistica
+Neerlandica, </span><span style="font-weight: bold;">54</span><span style="font-style: italic;">, </span>3,
+329&ndash;350<span style="font-style: italic;">.</span></li>
+
+  <li>P. Zheng, P.A. Durr and P.J. Diggle (2004) Edge-Correction
+for Spatial Kernel Smoothing &mdash; When Is It Necessary? <span style="font-style: italic;">Proceedings of the GisVet
+Conference 2004</span>, University of Guelph, Ontario, Canada,
+June 2004.</li>
+
+  <li>Diggle, P.J., Zheng, P. and Durr, P.A. (2005) Nonparametric
+estimation of spatial segregation in a multivariate point process:
+bovine tuberculosis in Cornwall, UK. <span style="font-style: italic;">J. R. Stat. Soc. C</span>,
+    <span style="font-weight: bold;">54</span>, 3,
+645&ndash;658.</li>
+
+  <li>Diggle, P.J., V. G&oacute;mez-Rubio, P.E. Brown, A.G.
+Chetwynd and S. Gooding (2006) <span style="font-style: italic;">Biometrics</span>,
+submitted.</li>
+
+</ul>
+
+<a name="down"></a><span style="font-weight: bold;">Downloads<br>
+
+<br>
+
+</span>If your browser&nbsp;supports math poorly, here is a
+pdf version of <a href="spatialkernel.pdf">this page</a>.
+If you want to try the package, please download the latest version
+in&nbsp;<a href="spatialkernel.tar.gz">source file</a>
+or&nbsp;<a href="spatialkernel.zip">binary&nbsp;for
+Windows</a>. <br>
+
+<br>
+
+Thanks for reading this page.<br>
+
+<br>
+
+<br>
+
+</body>
+</html>

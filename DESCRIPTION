@@ -1,0 +1,14 @@
+Package: spatialkernel
+Version: 0.4-7
+Date: 2006-06-27
+Title: Nonparameteric estimation of spatial segregation
+  in a multivariate point process
+Author: Pingping Zheng and Peter Diggle
+Maintainer: Pingping Zheng <pingping.zheng@lancaster.ac.uk>
+Depends: R (>= 1.9.0)
+Description: Edge-corrected kernel density estimation and binary kernel
+  regression estimation for multivariate spatial point process data
+License: Freely available, it is copyrighted by the authors and may not be
+  sold or included in commercial products without a license.
+URL: http://www.maths.lancas.ac.uk/~zhengp1/spatialkernel/
+Packaged: Wed Jun 28 16:34:27 2006; zhengp1
