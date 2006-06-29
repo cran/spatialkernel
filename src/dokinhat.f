@@ -380,6 +380,7 @@ C x,y pts, z=lambda(x,y), xp, yp polygon
       subroutine trykh(x,y,n,z,xp,yp,np,s,ns,hkhat,icounts,hkhats,nptns)
 
       implicit real*8(a-h,o-z)
+      real*8 wij, wji
 
       common /bounds/area,iconvx
       real*8 area
@@ -457,6 +458,7 @@ C khat calculated at s[ns]
       subroutine dokinhat(x,y,n,z,xp,yp,np,s,ns,hkhat)
 
       implicit real*8(a-h,o-z)
+      double precision wij, wji
 
       common /bounds/area,iconvx
       real*8 area
@@ -490,9 +492,8 @@ C khat calculated at s[ns]
             if(it.le.ns) then
               wij=weight(xi,yi,t,xp,yp,np)
               wji=weight(x(j),y(j),t,xp,yp,np)
+              hkhat(it)=hkhat(it)+(wij+wji)/(z(i)*z(j))
             end if
-
-            hkhat(it)=hkhat(it)+(wij+wji)/(z(i)*z(j))
           end if
         end do
       end do

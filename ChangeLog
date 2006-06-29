@@ -1,6 +1,13 @@
 Log file 
 
 Version 0.4-6
-
 First publically available version from my webpage.
 Submitting to CRAN soon.
+
+Version 0.4-7
+Minor changes to ensure it compliance with F77 standard
+Absorb outside common block data file "bounds.cmn" into dokinhat.f
+
+Version 0.4-8
+Minor changes to possible wrong use of default value 0 for real
+in dokinhat.f
