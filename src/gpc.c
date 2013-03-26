@@ -30,6 +30,7 @@ Copyright: (C) 1997-1999, Advanced Interfaces Group,
 #include <float.h>
 #include <math.h>
 #include "gpc.h"
+#include<R.h>
 
 #ifndef TRUE
 #define FALSE              0
@@ -84,9 +85,12 @@ Copyright: (C) 1997-1999, Advanced Interfaces Group,
                             (i)= (d)->bot.x + (d)->dx * ((j)-(d)->bot.y);}
 
 #define MALLOC(p, b, s)    {if ((b) > 0) { \
-                            p= malloc(b); if (!(p)) { \
-                            fprintf(stderr, "gpc malloc failure: %s\n", s); \
-		            exit(0);}} else p= NULL;}
+                            p= Calloc(b, char); if (!(p)) { \
+                            error("gpc malloc failure: %s\n", s); \
+		            }} else p= NULL;}
+		            /*exit(0);}} else p= NULL;}*/
+                            /*p= malloc(b); if (!(p)) { \*/
+                            /*fprintf(stderr, "gpc malloc failure: %s\n", s); \*/
 
 #define FREE(p)            {if (p) {free(p); (p)= NULL;}}
 
@@ -2433,8 +2437,8 @@ void simple_polygon_clip(double *sub_x, double *sub_y, int *sub_n,
   } else if(result_polygon.num_contours==0){
     *res_n = 0;
   } else {
-    printf("\nUnexpected result from calling simple_polygon_clip().");
-    exit(1);
+    error("\nUnexpected result from calling simple_polygon_clip().");
+    /*exit(1); FIXED*/
   }
   gpc_free_polygon(&subject_polygon);
   gpc_free_polygon(&clip_polygon);

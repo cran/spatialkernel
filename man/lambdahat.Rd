@@ -55,7 +55,7 @@
     \item P. Zheng, P.A. Durr and P.J. Diggle (2004) Edge--correction for Spatial
       Kernel Smoothing --- When Is It Necessary? \emph{Proceedings of the GisVet
       Conference 2004}, University of Guelph, Ontario, Canada, June 2004.
-	\item Baddeley, A. J. and M{\o}ller, J. and Waagepetersen R.
+	\item Baddeley, A. J. and Møller, J. and Waagepetersen R.
       (2000) Non and semi-parametric estimation of interaction in 
       inhomogeneous point patterns, \emph{Statistica Neerlandica}, \bold{54}, 
       3, 329--350.
@@ -81,7 +81,7 @@
 
   Other source codes used in the implementation of the double integration 
   algorithm include
-  \itemize {
+  \itemize{
     \item Laurie, D.P. (1982) \emph{adaptive cubature} code in Fortran;
     \item Shewchuk, J.R. \emph{triangulation} code in C;
     \item Alan Murta's \emph{polygon intersection} code in C 

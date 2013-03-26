@@ -68,8 +68,8 @@ void hatp(double *dpt, double *xpts, int *y, int *n, double *h, int *kernel,
   int i;
   sum1 = (double *)malloc((*m)*sizeof(double));
   if(sum1==NULL) {
-    printf("\nCannot allocate enough memory.\n");
-    exit(1);
+    Rprintf("\nCannot allocate enough memory.\n");
+    return; /*exit(1); FIXED*/
   } 
   for(i=0; i<*m; i++) sum1[i]=0;
   for(i=0; i<*n; i++){
@@ -91,8 +91,8 @@ void hatpn(double *dpts, int *ndpts, double *xpts, int *y, int *n, double *h,
   int i, j;
   sum1 = (double *)malloc((*m)*sizeof(double));
   if(sum1==NULL) {
-    printf("\nCannot allocate enough memory.\n");
-    exit(1);
+    Rprintf("\nCannot allocate enough memory.\n");
+    return; /*exit(1); FIXED*/
   } 
 
   for(j=0; j<*ndpts; j++) {

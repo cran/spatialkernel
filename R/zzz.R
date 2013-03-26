@@ -12,7 +12,7 @@
                           fsep = .Platform$file.sep)
     verline <- readLines(desfile, n=2, ok=TRUE)[[2]]
     version <- gsub("Version: ", "", verline, ignore.case=TRUE)
-    cat("\nThis is", pkgname, version, "\n\n")
+    packageStartupMessage("\nThis is ", pkgname," ", version, "\n\n")
 }
 
 .onUnload <- function(libpath)

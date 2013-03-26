@@ -3,6 +3,7 @@
 #include <math.h>
 #include "risk.h"
 #include "gpc.h"
+#include"R.h"
 
 #ifdef SINGLE
 #define REAL float
@@ -118,8 +119,8 @@ void add_grids(double* poly, int* npoly, double *rangxy, double *h,
   }
   
   if(ngrids>checksum){
-    printf("\nMemory for added points in add_grids too small.\n");
-    exit(1);
+    error("\nMemory for added points in add_grids too small.\n");
+    return; /* exit(1) FIXED*/;
   }
   return;
 }
@@ -141,18 +142,18 @@ void constrained(double* poly, int* npoly, double *rangxy, double *h,
   xgrid=(REAL *)malloc((npts[0]-npoly[0])*sizeof(REAL));
   ygrid=(REAL *)malloc((npts[0]-npoly[0])*sizeof(REAL));
   if(addindx==NULL || xgrid==NULL || ygrid==NULL) {
-    printf("\nCannot allocate enough memory.\n");
-    exit(1);
+    error("\nCannot allocate enough memory.\n");
+    return; /* exit(1); FIXED */
   } 
   addindx[0] = npts[0]-npoly[0];  
 
   if(npoly[0]>3000){
-    printf("\nNumber of polygon points exceed 3000.\n");
-    exit(1);
+    error("\nNumber of polygon points exceed 3000.\n");
+    return;/* exit(1); FIXED */
   }
 
   add_grids(poly, npoly, rangxy, h, xgrid, ygrid, addindx);
-  /* for(i=0; i<npoly[0]+1; i++) printf("\naddindx[%d]=%d", i, addindx[i]);*/
+  /* for(i=0; i<npoly[0]+1; i++) Rprintf("\naddindx[%d]=%d", i, addindx[i]);*/
 
   nedge=0;
   for(i=0; i<npoly[0]; i++) nedge += addindx[i];
@@ -213,9 +214,8 @@ void constrained(double* poly, int* npoly, double *rangxy, double *h,
   triangulate("pzBNQ", &in, &out, (struct triangulateio *) NULL);
  
   if(ntri[0]<out.numberoftriangles) {
-    printf("\nMemory for generated triangles too small.\n");
-    printf("\nGenerated %d triangles.\n", out.numberoftriangles);
-    exit(1);
+    error("\nMemory for generated triangles too small.\nGenerated %d triangles.\n", out.numberoftriangles);
+    return;/* exit(1); FIXED */
   } else ntri[0]=out.numberoftriangles;
 
   for(i=0; i<2*npts[0]; i++) pts[i] = in.pointlist[i];
@@ -353,15 +353,15 @@ void adaptpoly(double *poly, int *npoly, double *xpts, int *nxpts,
   adaptpoly(poly, &npoly, xpts, &nxpts, &h, &kernel, &c1, &c2, rngxy, 
 	     &eps, err, &mcalls, ncalls, ier, cxh);
   }
-  printf("\nPoint      Cubature        Ncalls        Est abs error\n");
+  Rprintf("\nPoint      Cubature        Ncalls        Est abs error\n");
   for(i=0; i<nxpts; i++) {
-    printf("%5d%15.8g%10d%22.6g\n", i+1, cxh[i], ncalls[i], err[i]);
+    Rprintf("%5d%15.8g%10d%22.6g\n", i+1, cxh[i], ncalls[i], err[i]);
   }
-  printf("\nFrequency of integration indicators:\n");
-  for(i=0; i<6; i++) printf("%6d", i);
-  printf("\n");
-  for(i=0; i<6; i++) printf("%6d", ier[i]);
-  printf("\n\nPI/2=%11.10g\n", asin(1.0));
+  Rprintf("\nFrequency of integration indicators:\n");
+  for(i=0; i<6; i++) Rprintf("%6d", i);
+  Rprintf("\n");
+  for(i=0; i<6; i++) Rprintf("%6d", ier[i]);
+  Rprintf("\n\nPI/2=%11.10g\n", asin(1.0));
   return 0;
 }
 */

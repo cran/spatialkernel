@@ -12,7 +12,7 @@ from small risk (bright orange) to high risk (dark red).
   \item{n}{number of colors (>= 1) to be in the palette.}
 }
 \seealso{
-  \code{\code{\link{metre}}, \link{colors}}, and \code{\link{palette}}.
+  \code{\link{metre}}, \code{\link{colors}}, and \code{\link{palette}}.
 }
 \examples{
   ## risk pie with ten levels

@@ -58,7 +58,7 @@ plotphat <- function(obj, types=unique(obj$marks), sup=TRUE, col=risk.colors(10)
     m <- length(types)
     for(j in 1:m) {
         if(is.null(obj$poly)) {
-            plot(obj$pts[1,], xlab="", ylab="", xlim=range(pts[,1]), ylim=range(pts[,2]),
+            plot(obj$pts[1,], xlab="", ylab="", xlim=range(obj$pts[,1]), ylim=range(obj$pts[,2]),
                  asp=1, main=types[j], type="n")
         } else {
             plot(obj$pts[1,], xlab="", ylab="", xlim=range(obj$poly[,1]), 
@@ -85,7 +85,7 @@ plotmc <- function(obj, types=unique(obj$marks), quan=c(0.05, 0.95), sup=FALSE,
     m <- length(types)
     for(j in 1:m) {
         if(is.null(obj$poly)) {
-            plot(obj$pts[1,], xlab="", ylab="", xlim=range(pts[,1]), ylim=range(pts[,2]),
+            plot(obj$pts[1,], xlab="", ylab="", xlim=range(obj$pts[,1]), ylim=range(obj$pts[,2]),
                  asp=1, main=types[j], type="n")
         } else {
             plot(obj$pts[1,], xlab="", ylab="", xlim=range(obj$poly[,1]), 

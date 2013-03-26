@@ -16,7 +16,7 @@ varphat<-function(pts, dpts, y, p, h)
     ans<-.C("varphat", as.double(pts), as.integer(npts), as.double(dpts),
             as.integer(yy), as.double(p), as.integer(n), as.double(h), as.integer(1),
             as.double(c), as.integer(m), as.double(wrksp), varp=double(npts*m),
-	    PACKAGE="spatialkermel")$varp
+	    PACKAGE="spatialkernel")$varp
     ans <- matrix(ans, ncol=m, dimnames=list(NULL, ynames))
     invisible(list(pvar=ans, pts=pts, dpts=dpts, y=y, h=h))
 }

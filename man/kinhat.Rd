@@ -44,7 +44,7 @@
 }
 \references{
   \enumerate{
-    \item Baddeley, A. J. and M{\o}ller, J. and Waagepetersen R.
+    \item Baddeley, A. J. and Møller, J. and Waagepetersen R.
     (2000) Non and semi-parametric estimation of interaction in 
     inhomogeneous point patterns, \emph{Statistica Neerlandica}, \bold{54}, 
     3, 329--350.

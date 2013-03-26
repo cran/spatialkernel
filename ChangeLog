@@ -11,3 +11,8 @@ Absorb outside common block data file "bounds.cmn" into dokinhat.f
 Version 0.4-8
 Minor changes to possible wrong use of default value 0 for real
 in dokinhat.f
+
+Version 0.4-18
+Minor fixes in the C code for memory allocation. Changes in the
+licenses to comply with CRAN policies.
+
