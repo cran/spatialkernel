@@ -5,7 +5,7 @@ Title: Nonparameteric Estimation of Spatial Segregation in a
         Multivariate Point Process
 Encoding: latin1
 Author: Pingping Zheng and Peter Diggle
-Maintainer: Maintainer: Virgilio Gomez-Rubio <Virgilio.Gomez@uclm.es>
+Maintainer: Virgilio Gomez-Rubio <Virgilio.Gomez@uclm.es>
 Depends: R (>= 1.9.0)
 Imports:
     graphics,
@@ -17,4 +17,5 @@ Description: Edge-corrected kernel density estimation and binary kernel
         data.
 License: file LICENSE
 NeedsCompilation: yes
+LazyData: true
 RoxygenNote: 6.0.1
