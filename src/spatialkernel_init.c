@@ -6,6 +6,11 @@
 Check these declarations against the C/Fortran source code.
 */
 
+/* References for what this means
+https://stackoverflow.com/questions/42313373/r-cmd-check-note-found-no-calls-to-r-registerroutines-r-usedynamicsymbols
+https://cran.r-project.org/doc/manuals/r-devel/R-exts.html#Registering-native-routines
+*/
+
 /* .C calls */
 extern void adaptpoly(double *, int *, double *, int *, double *, int *, 
   double *, double *, double *, double *, double *, int *, int *, int *, 
@@ -22,9 +27,9 @@ extern void varphat(double *, int *, double *, int *, double *, int *, double *,
   int *, double *, int *, double *, double *);
 
 /* .Fortran calls */
-extern void F77_NAME(dokinhat)(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
-extern void F77_NAME(pnpoly)(void *, void *, void *, void *, void *, void *);
-extern void F77_NAME(psnpoly)(void *, void *, void *, void *, void *, void *, void *);
+extern void F77_NAME(dokinhat)(double *, double *, int *, double *, double *, double *, int *, double *, int *, double *);
+extern void F77_NAME(pnpoly)(double *, double *, double *, double *, int *, int *);
+extern void F77_NAME(psnpoly)(double *, double *, int *, double *, double *, int *, double *);
 
 static const R_CMethodDef CEntries[] = {
   {"adaptpoly",    (DL_FUNC) &adaptpoly,    15},
