@@ -7,14 +7,19 @@ Check these declarations against the C/Fortran source code.
 */
 
 /* .C calls */
-extern void adaptpoly(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
-extern void animation(void *, void *, void *, void *, void *, void *, void *);
-extern void area_poly(void *, void *, void *);
-extern void hat_lambda_b(void *, void *, void *, void *, void *, void *);
-extern void hat_lambda_c(void *, void *, void *, void *, void *, void *, void *, void *);
-extern void hatpn(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
-extern void lcn(void *, void *, void *, void *, void *, void *, void *, void *);
-extern void varphat(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
+extern void adaptpoly(double *, int *, double *, int *, double *, int *, 
+  double *, double *, double *, double *, double *, int *, int *, int *, 
+  double *);
+extern void area_poly(double *, int *, double *);
+extern void hat_lambda_b(double *, int *, double *, int *, double *, double *);
+extern void hat_lambda_c(double *, int *, double *, int *, double *, int *, 
+  double *, double *);
+extern void hatpn(double *, int *, double *, int *, int *, double *, int *, 
+  double *, int *, double *);
+extern void lcn(double *, int *, int *, double *, int *, int *, double *, 
+  double *);
+extern void varphat(double *, int *, double *, int *, double *, int *, double *, 
+  int *, double *, int *, double *, double *);
 
 /* .Fortran calls */
 extern void F77_NAME(dokinhat)(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
@@ -23,7 +28,6 @@ extern void F77_NAME(psnpoly)(void *, void *, void *, void *, void *, void *, vo
 
 static const R_CMethodDef CEntries[] = {
   {"adaptpoly",    (DL_FUNC) &adaptpoly,    15},
-  {"animation",    (DL_FUNC) &animation,     7},
   {"area_poly",    (DL_FUNC) &area_poly,     3},
   {"hat_lambda_b", (DL_FUNC) &hat_lambda_b,  6},
   {"hat_lambda_c", (DL_FUNC) &hat_lambda_c,  8},

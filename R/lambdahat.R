@@ -97,7 +97,7 @@ lambdahat <- function(pts, h, gpts=NULL, poly=NULL, edge=TRUE)
   invisible(list(lambda=ans, pts=pts, gpts=gpts, poly=poly, h=h, edge=edge))
 }
 
-adaptpoly<-function(pts, h, poly) 
+adaptpoly <- function(pts, h, poly) 
 {
     c1 <- 10; eps <- 0.0001; mcalls <- 10000
     adapt <- chkernel()

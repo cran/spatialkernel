@@ -9,7 +9,7 @@
 #'   For a complete list of functions with individual help pages,
 #'   use \code{library(help = \ "spatialkernel")}.
 #' @author Pingping Zheng and Peter Diggle
-#' @section Maintainer
+#' @section Maintainer:
 #'   Pingping Zheng \email{pingping.zheng@lancaster.ac.uk}
 #' @references
 #' \enumerate{

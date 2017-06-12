@@ -21,6 +21,11 @@ This package contains functions for spatial point process
 For the convience of the user, we present here examples which show
   how to use some of the functions in the package.
 }
+\section{Maintainer}{
+
+  Pingping Zheng \email{pingping.zheng@lancaster.ac.uk}
+}
+
 \examples{
 ## An example of spatial segregation analysis
 \dontrun{
