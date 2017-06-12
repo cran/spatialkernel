@@ -3,7 +3,7 @@
 .onLoad <- function(libname, pkgname) 
 {
     chkernel()
-    library.dynam("spatialkernel", pkgname, libname)
+    #library.dynam("spatialkernel", pkgname, libname)
 }
 
 .onAttach <- function(libname, pkgname)
@@ -15,5 +15,6 @@
     packageStartupMessage("\nThis is ", pkgname," ", version, "\n\n")
 }
 
-.onUnload <- function(libpath)
-    library.dynam.unload("spatialkernel", libpath)
+.onUnload <- function(libpath) {
+    #library.dynam.unload("spatialkernel", libpath)
+}

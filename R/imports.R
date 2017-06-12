@@ -19,3 +19,6 @@
 #' @importFrom grDevices rgb
 #' @importFrom stats runif
 NULL
+
+#' @useDynLib spatialkernel, .registration=TRUE
+NULL
