@@ -6,10 +6,15 @@ Title: Nonparameteric Estimation of Spatial Segregation in a
 Encoding: latin1
 Author: Pingping Zheng and Peter Diggle
 Maintainer: Virgilio Gomez-Rubio <Virgilio.Gomez@uclm.es>
+Maintainer: Virgilio Gomez-Rubio <Virgilio.Gomez@uclm.es>
 Depends: R (>= 1.9.0)
+Imports:
+    graphics,
+    grDevices,
+    roxygen2 (>= 6.0.1),
+    stats
 Description: Edge-corrected kernel density estimation and binary kernel
         regression estimation for multivariate spatial point process
         data.
 License: file LICENSE
-Packaged: 2013-03-26 10:22:21 UTC; virgil
 NeedsCompilation: yes
