@@ -8,21 +8,10 @@ assign("ker4names", c(get("kernames", envir=.spatialkernelOptions), "quadratic")
 ## check .adaptpara in .spatialkernelOptions for existence and validation 
 chkernel <- function()
 { 
-#  if(exists(".adaptpara", envir=.spatialkernelOptions)) {
-    chk <- FALSE
-    adapt <- get(".adaptpara", envir=.spatialkernelOptions)
-	if(is.list(adapt)) {
-	  # Not clear what this is doing. Using the new DLL registration system, 
-	  # there is no adapt$PACKAGE. Just setting chk = FALSE for now.
-	  # if(adapt$PACKAGE != "spatialkernel") chk = TRUE
-	  chk = FALSE
-	} else chk = TRUE
-	if(chk) {
-	  stop("\n.adaptpara is reserved for spatialkernel internal usage.\n") 
-    }
-#  } else {
-#    adapt <- get(".adaptpara", envir = getNamespace("spatialkernel"))
-#  }
+  adapt <- get(".adaptpara", envir=.spatialkernelOptions)
+	if(!is.list(adapt)) {
+	  stop(".adaptpara is reserved for spatialkernel internal usage.") 
+  }
   adapt
 }
 
