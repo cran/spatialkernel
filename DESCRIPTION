@@ -1,11 +1,18 @@
 Package: spatialkernel
 Version: 0.4-20
-Date: 2017-06-11
+Date: 2017-06-12
 Title: Nonparameteric Estimation of Spatial Segregation in a
         Multivariate Point Process
-Encoding: latin1
 Author: Pingping Zheng and Peter Diggle
+Authors@R: c(
+    person("Virgilio", "Gomez-Rubio", , "Virgilio.Gomez@uclm.es", "aut"),
+    person("Pingping", "Zheng", , "pingping.zheng@lancaster.ac.uk", "aut"),
+    person("Peter", "Diggle", , "p.diggle@lancaster.ac.uk", c("aut", "cre")),
+    person("Richard", "Cotton", , "richierocks@gmail.com", "ctb")
+)
 Maintainer: Virgilio Gomez-Rubio <Virgilio.Gomez@uclm.es>
+URL: https://github.com/datacamp/spatialkernel
+BugReports: https://github.com/datacamp/spatialkernel/issues
 Depends: R (>= 1.9.0)
 Imports:
     graphics,
