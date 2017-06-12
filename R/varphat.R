@@ -13,7 +13,7 @@ varphat <- function(pts, dpts, y, p, h)
     yy <- ynames0[as.character(y)]
     c <- rep(1, npts)
     wrksp <- rep(0, n)
-    ans<-.C("varphat", as.double(pts), as.integer(npts), as.double(dpts),
+    ans<-.C("var_phat", as.double(pts), as.integer(npts), as.double(dpts),
             as.integer(yy), as.double(p), as.integer(n), as.double(h), as.integer(1),
             as.double(c), as.integer(m), as.double(wrksp), pvar=double(npts*m))$pvar
     ans <- matrix(ans, ncol=m, dimnames=list(NULL, ynames))

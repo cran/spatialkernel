@@ -103,7 +103,7 @@ adaptpoly <- function(pts, h, poly)
 	if(adapt$kernel==1) c2 <- 20 else c2 <- 1
     rng <- c(range(poly[,1]), range(poly[,2]))
     if(is.null(nrow(pts))) npts <- 1 else npts <- nrow(pts)
-    ans<-.C("adaptpoly", as.double(poly), as.integer(nrow(poly)), as.double(pts),
+    ans<-.C("adapt_poly", as.double(poly), as.integer(nrow(poly)), as.double(pts),
             as.integer(npts), as.double(h), as.integer(adapt$kernel),
             as.double(c1), as.double(c2), as.double(rng),
             as.double(eps), err=double(npts), as.integer(mcalls),

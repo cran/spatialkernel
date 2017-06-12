@@ -269,78 +269,78 @@ void adaptconvex(double *xpoly, double *ypoly, int *npoly,
 xpts are coordinates of x_i; poly and xpts: first x coordinates, then y...
 cxh[n] as long as xpts[n*2];
 c1*h to grid the polygon area; c2*h away from xpt integrand is 0;*/
-void adaptpoly(double *poly, int *npoly, double *xpts, int *nxpts, 
-	       double *h, int *kernel, double *c1, double *c2, double *rngxy,
-	       double *eps, double *err, int *mcalls, int *ncalls, int *ier,
-	       double *cxh)
+void adapt_poly(double *poly, int *npoly, double *xpts, int *nxpts, 
+  double *h, int *kernel, double *c1, double *c2, double *rngxy,
+  double *eps, double *err, int *mcalls, int *ncalls, int *ier,
+  double *cxh)
 {
   double *tripts, c1h, c2h, neps, err0;
   int ntripts, ntri, *tri, ncalls0; /* , ier0;*/
-  int nxgrid, nygrid;
-  double tri0[6], tri1[6], *w, ans; /*, p[2], r2;*/
-  int nw;
-  double sq[8], clip[22];
-  int three=3, four=4, nclip, ier1[6];
-  int i, j, k;
-  c1h = c1[0]*h[0];
-  c2h = c2[0]*h[0];
-  nxgrid = (int) ceil((rngxy[1]-rngxy[0])/(c1h));
-  nygrid = (int) ceil((rngxy[3]-rngxy[2])/(c1h));
-  ntripts = 2*(nxgrid*nygrid+npoly[0]);
-  tripts = (double *) malloc(2*ntripts*sizeof(double));
-  ntri = 2*ntripts;
-  tri = (int *) malloc(3*ntri*sizeof(int));
-  constrained(poly, npoly, rngxy, &c1h, tripts, &ntripts, tri, &ntri);
-  neps = eps[0]/((double) ntri);
-  nw = (int) ceil(3.0*(19.0+3.0*mcalls[0])/38.0);
-  w = (double *) malloc(nw*sizeof(double));
-  for(i=0; i<nxpts[0]; i++) {
-    ncalls[i] = 0;
-    cxh[i] = 0;
-    err[i] = 0;
-  }
-  for(j=0; j<6; j++) ier[j] = 0;
-  for(j=0; j<ntri; j++){ /*each triangle*/
-    /* vertice index tri[3*j], tri[3*j+1], tri[3*j+2]
-     point-xy: tripts[2*tri[3*j]], tripts[2*tri[3*j]+1], ... */
-    for(k=0; k<3; k++) {
-      tri0[2*k] = tripts[2*tri[3*j+k]]; /*x*/
-      tri0[2*k+1] = tripts[2*tri[3*j+k]+1]; /*y*/
-      tri1[k] = tri0[2*k]; 
-      tri1[3+k] = tri0[2*k+1]; 
-    }
-    /* circumcircle(tri1, &tri1[3], p, &r2); 
-    p circumcircle centre, r2=r*r, r radius
-    d=distance of circumcircle centre to integration centre point
-    if d > c2h+sqrt(r2) then integration=0
-    r2=-1 means tri1 collinear*/
-    for(i=0; i<nxpts[0]; i++) { 
-      /*if( (r2!=-1)&&( (p[0]-xpts[i])*(p[0]-xpts[i])+(p[1]-xpts[nxpts[0]+i])
-      	      *(p[1]-xpts[nxpts[0]+i]) < 
-      	      (c2h+sqrt(r2))*(c2h+sqrt(r2)) ) ) {
-      	if(*kernel!=1) { // non-Gaussian */
-      sq[0] = xpts[i] - c2h; sq[1] = xpts[i] + c2h; 
-      sq[2] = xpts[i] + c2h; sq[3] = xpts[i] - c2h; 
-      sq[4] = xpts[nxpts[0]+i] - c2h; sq[5] = xpts[nxpts[0]+i] - c2h; 
-      sq[6] = xpts[nxpts[0]+i] + c2h; sq[7] = xpts[nxpts[0]+i] + c2h; 
-      simple_polygon_clip(tri1, &tri1[3], &three, sq, &sq[4], &four, 
-			  clip, &clip[11], &nclip);
-      if(nclip > 0){
-	adaptconvex(clip, &clip[11], &nclip, &xpts[i], &xpts[nxpts[0]+i],
-		    h, kernel, eps, &err0, mcalls, &ncalls0, ier1, &nw, w, 
-		    &ans);
-	ier[0] += ier1[0]; ier[1] += ier1[1]; ier[2] += ier1[2]; 
-	ier[3] += ier1[3]; ier[4] += ier1[4]; ier[5] += ier1[5];
-	if(ncalls[i]<ncalls0) ncalls[i]=ncalls0;
-	cxh[i] += ans;
-      }
-    }
-  }
-  free(tripts); 
-  free(tri);
-  free(w);
+int nxgrid, nygrid;
+double tri0[6], tri1[6], *w, ans; /*, p[2], r2;*/
+int nw;
+double sq[8], clip[22];
+int three=3, four=4, nclip, ier1[6];
+int i, j, k;
+c1h = c1[0]*h[0];
+c2h = c2[0]*h[0];
+nxgrid = (int) ceil((rngxy[1]-rngxy[0])/(c1h));
+nygrid = (int) ceil((rngxy[3]-rngxy[2])/(c1h));
+ntripts = 2*(nxgrid*nygrid+npoly[0]);
+tripts = (double *) malloc(2*ntripts*sizeof(double));
+ntri = 2*ntripts;
+tri = (int *) malloc(3*ntri*sizeof(int));
+constrained(poly, npoly, rngxy, &c1h, tripts, &ntripts, tri, &ntri);
+neps = eps[0]/((double) ntri);
+nw = (int) ceil(3.0*(19.0+3.0*mcalls[0])/38.0);
+w = (double *) malloc(nw*sizeof(double));
+for(i=0; i<nxpts[0]; i++) {
+  ncalls[i] = 0;
+  cxh[i] = 0;
+  err[i] = 0;
 }
- 
+for(j=0; j<6; j++) ier[j] = 0;
+for(j=0; j<ntri; j++){ /*each triangle*/
+/* vertice index tri[3*j], tri[3*j+1], tri[3*j+2]
+  point-xy: tripts[2*tri[3*j]], tripts[2*tri[3*j]+1], ... */
+for(k=0; k<3; k++) {
+  tri0[2*k] = tripts[2*tri[3*j+k]]; /*x*/
+tri0[2*k+1] = tripts[2*tri[3*j+k]+1]; /*y*/
+tri1[k] = tri0[2*k]; 
+tri1[3+k] = tri0[2*k+1]; 
+}
+/* circumcircle(tri1, &tri1[3], p, &r2); 
+p circumcircle centre, r2=r*r, r radius
+d=distance of circumcircle centre to integration centre point
+if d > c2h+sqrt(r2) then integration=0
+r2=-1 means tri1 collinear*/
+for(i=0; i<nxpts[0]; i++) { 
+  /*if( (r2!=-1)&&( (p[0]-xpts[i])*(p[0]-xpts[i])+(p[1]-xpts[nxpts[0]+i])
+  *(p[1]-xpts[nxpts[0]+i]) < 
+    (c2h+sqrt(r2))*(c2h+sqrt(r2)) ) ) {
+  if(*kernel!=1) { // non-Gaussian */
+  sq[0] = xpts[i] - c2h; sq[1] = xpts[i] + c2h; 
+  sq[2] = xpts[i] + c2h; sq[3] = xpts[i] - c2h; 
+  sq[4] = xpts[nxpts[0]+i] - c2h; sq[5] = xpts[nxpts[0]+i] - c2h; 
+  sq[6] = xpts[nxpts[0]+i] + c2h; sq[7] = xpts[nxpts[0]+i] + c2h; 
+  simple_polygon_clip(tri1, &tri1[3], &three, sq, &sq[4], &four, 
+    clip, &clip[11], &nclip);
+  if(nclip > 0){
+    adaptconvex(clip, &clip[11], &nclip, &xpts[i], &xpts[nxpts[0]+i],
+      h, kernel, eps, &err0, mcalls, &ncalls0, ier1, &nw, w, 
+      &ans);
+    ier[0] += ier1[0]; ier[1] += ier1[1]; ier[2] += ier1[2]; 
+    ier[3] += ier1[3]; ier[4] += ier1[4]; ier[5] += ier1[5];
+    if(ncalls[i]<ncalls0) ncalls[i]=ncalls0;
+    cxh[i] += ans;
+  }
+  }
+}
+free(tripts); 
+free(tri);
+free(w);
+}
+
 /* int main()
 {
   REAL poly[]={0,1,1,0,0,0,1,1}, rngxy[]={0,1,0,1};
@@ -350,7 +350,7 @@ void adaptpoly(double *poly, int *npoly, double *xpts, int *nxpts,
   int mcalls=1000, ncalls[2], ier[6];
   int i;
   for(i=0; i<1000; i++){
-  adaptpoly(poly, &npoly, xpts, &nxpts, &h, &kernel, &c1, &c2, rngxy, 
+  adapt_poly(poly, &npoly, xpts, &nxpts, &h, &kernel, &c1, &c2, rngxy, 
 	     &eps, err, &mcalls, ncalls, ier, cxh);
   }
   Rprintf("\nPoint      Cubature        Ncalls        Est abs error\n");

@@ -12,7 +12,7 @@ https://cran.r-project.org/doc/manuals/r-devel/R-exts.html#Registering-native-ro
 */
 
 /* .C calls */
-extern void adaptpoly(double *, int *, double *, int *, double *, int *, 
+extern void adapt_poly(double *, int *, double *, int *, double *, int *, 
   double *, double *, double *, double *, double *, int *, int *, int *, 
   double *);
 extern void area_poly(double *, int *, double *);
@@ -23,7 +23,7 @@ extern void hatpn(double *, int *, double *, int *, int *, double *, int *,
   double *, int *, double *);
 extern void lcn(double *, int *, int *, double *, int *, int *, double *, 
   double *);
-extern void varphat(double *, int *, double *, int *, double *, int *, double *, 
+extern void var_phat(double *, int *, double *, int *, double *, int *, double *, 
   int *, double *, int *, double *, double *);
 
 /* .Fortran calls */
@@ -32,13 +32,13 @@ extern void F77_NAME(pnpoly)(double *, double *, double *, double *, int *, int 
 extern void F77_NAME(psnpoly)(double *, double *, int *, double *, double *, int *, double *);
 
 static const R_CMethodDef CEntries[] = {
-  {"adaptpoly",    (DL_FUNC) &adaptpoly,    15},
+  {"adapt_poly",    (DL_FUNC) &adapt_poly,    15},
   {"area_poly",    (DL_FUNC) &area_poly,     3},
   {"hat_lambda_b", (DL_FUNC) &hat_lambda_b,  6},
   {"hat_lambda_c", (DL_FUNC) &hat_lambda_c,  8},
   {"hatpn",        (DL_FUNC) &hatpn,        10},
   {"lcn",          (DL_FUNC) &lcn,           8},
-  {"varphat",      (DL_FUNC) &varphat,      12},
+  {"var_phat",      (DL_FUNC) &var_phat,      12},
   {NULL, NULL, 0}
 };
 

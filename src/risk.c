@@ -111,7 +111,7 @@ void hatpn(double *dpts, int *ndpts, double *xpts, int *y, int *n, double *h,
 }
 
 /* known phat at xpts, wrsp[n]--workspace */
-void varphat(double *dpts, int *ndpts, double *xpts, int *y, double *phat, int *n, double *h, 
+void var_phat(double *dpts, int *ndpts, double *xpts, int *y, double *phat, int *n, double *h, 
 	   int *kernel, double *c, int *m, double *wrsp, double *pvar)
 {
   double sum, xpti[2];
