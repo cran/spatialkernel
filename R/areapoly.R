@@ -25,7 +25,7 @@ areapoly <- function(poly) {
     npoly <- nrow(poly)
     asign <- 1
     ans <- .C("area_poly", as.double(poly), as.integer(npoly),
-              area=as.double(0), PACKAGE="spatialkernel")$area
+              area=as.double(0))$area
     if(ans < 0) {
         asign <- -1
         ans <- -ans

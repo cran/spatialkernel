@@ -52,8 +52,7 @@ phat <- function(gpts, pts, marks, h)
     ans<-.C("hatpn", as.double(gpts), as.integer(ngpts), as.double(pts),
             as.integer(yy), as.integer(n), as.double(h), 
             as.integer(adapt$kernel),
-            as.double(c), as.integer(m), p=double(ngpts*m),
-            PACKAGE="spatialkernel")$p
+            as.double(c), as.integer(m), p=double(ngpts*m))$p
     ans <- matrix(ans, ncol=m, dimnames=list(NULL, ynames))
     invisible(list(p=ans, pts=pts, gpts=gpts, marks=marks, h=h))
 }

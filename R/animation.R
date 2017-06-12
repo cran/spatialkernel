@@ -17,6 +17,5 @@ animation <- function(xyt, poly=NULL, win=NULL, time=NULL, fades=0)
     }
     .C("animation", as.double(xyt), as.integer(dim(xyt)[1]),
        as.double(poly), as.integer(dim(poly)[1]),
-       as.double(win), as.double(time), as.integer(fades),
-       PACKAGE="spatialkernel")
+       as.double(win), as.double(time), as.integer(fades))
 }

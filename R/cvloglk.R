@@ -66,7 +66,7 @@ cvlogl <- function(pts, marks, h)
     for(i in 1:nh) c <- cbind(c, rep(1, n))
     ans<-.C("lcn", as.double(pts), as.integer(y), as.integer(n), as.double(h), 
         as.integer(nh), as.integer(adapt$kernel), as.double(c),
-        lc=double(nh), PACKAGE="spatialkernel")$lc
+        lc=double(nh))$lc
     invisible(list(cv=ans, pts=pts, marks=marks, h=h))
 }
 

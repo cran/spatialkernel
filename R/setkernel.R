@@ -1,7 +1,7 @@
 .spatialkernelOptions <- new.env(FALSE, globalenv())
 ## 1--gaussian; 2--quadratic(Epanechnikov); 3--quartic; 
 #.adaptpara <- list(kernel = 1, PACKAGE="spatialkerenl")
-assign(".adaptpara", list(kernel = 1, PACKAGE="spatialkernel"), envir=.spatialkernelOptions)
+assign(".adaptpara", list(kernel = 1), envir=.spatialkernelOptions)
 assign("kernames", c("gaussian", "epanechnikov", "quartic"), envir=.spatialkernelOptions)
 assign("ker4names", c(get("kernames", envir=.spatialkernelOptions), "quadratic"), envir=.spatialkernelOptions) ## equal to "ep"
 
@@ -12,7 +12,10 @@ chkernel <- function()
     chk <- FALSE
     adapt <- get(".adaptpara", envir=.spatialkernelOptions)
 	if(is.list(adapt)) {
-	  if(adapt$PACKAGE != "spatialkernel") chk = TRUE
+	  # Not clear what this is doing. Using the new DLL registration system, 
+	  # there is no adapt$PACKAGE. Just setting chk = FALSE for now.
+	  # if(adapt$PACKAGE != "spatialkernel") chk = TRUE
+	  chk = FALSE
 	} else chk = TRUE
 	if(chk) {
 	  stop("\n.adaptpara is reserved for spatialkernel internal usage.\n") 

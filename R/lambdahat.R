@@ -91,8 +91,7 @@ lambdahat <- function(pts, h, gpts=NULL, poly=NULL, edge=TRUE)
     if(edge) c <- adaptpoly(gpts, h, poly)$c else c <- rep(1, ngpts)
     ans <- .C("hat_lambda_c", as.double(gpts), as.integer(ngpts),
             as.double(pts), as.integer(npts), as.double(h),
-            as.integer(adapt$kernel), as.double(c), lam=double(ngpts),
-            PACKAGE="spatialkernel")$lam
+            as.integer(adapt$kernel), as.double(c), lam=double(ngpts))$lam
   }
   invisible(list(lambda=ans, pts=pts, gpts=gpts, poly=poly, h=h, edge=edge))
 }
@@ -108,8 +107,7 @@ adaptpoly <- function(pts, h, poly)
             as.integer(npts), as.double(h), as.integer(adapt$kernel),
             as.double(c1), as.double(c2), as.double(rng),
             as.double(eps), err=double(npts), as.integer(mcalls),
-            ncalls=integer(npts), ier=integer(6), c=double(npts),
-			PACKAGE="spatialkernel")
-    invisible(list(c=ans$c, err=ans$err, ncalls=ans$ncalls, ier=ans$ier,
+            ncalls=integer(npts), ier=integer(6), cxh=double(npts))
+    invisible(list(c=ans$cxh, err=ans$err, ncalls=ans$ncalls, ier=ans$ier,
         pts=pts, h=h, poly=poly))
 }

@@ -55,7 +55,6 @@ kinhat <- function (pts, lambda, poly, s)
     hkhat <- rep(0, times = ns)
     klist <- .Fortran("dokinhat", as.double(ptsx), as.double(ptsy),
         as.integer(npt), as.double(lambda), as.double(polyx), as.double(polyy),
-        as.integer(np), as.double(s), as.integer(ns), as.double(hkhat), 
-        PACKAGE="spatialkernel")
+        as.integer(np), as.double(s), as.integer(ns), as.double(hkhat))
     res <- list(k = as.numeric(klist[[10]]), s = s)
 }

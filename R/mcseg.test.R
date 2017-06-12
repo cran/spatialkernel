@@ -69,8 +69,7 @@ mcseg.test <- function(pts, marks, h, stpts=NULL, ntest=100, proc=TRUE)
         if(nh > 1) {
             lcc <- .C("lcn", as.double(pts), as.integer(y2), as.integer(n),
                   as.double(h), as.integer(nh), as.integer(adapt$kernel),
-                  as.double(c), lc=double(nh),
-                  PACKAGE="spatialkernel")$lc
+                  as.double(c), lc=double(nh))$lc
             ##ophndx <- which(lcc==max(lcc, na.rm=TRUE))
             ##oph <- h[ophndx[1]]
             oph <- h[which.max(lcc)]
@@ -78,16 +77,14 @@ mcseg.test <- function(pts, marks, h, stpts=NULL, ntest=100, proc=TRUE)
         p <- .C("hatpn", as.double(pts), as.integer(n), as.double(pts),
                 as.integer(y2), as.integer(n), as.double(oph),
                 as.integer(adapt$kernel),
-                as.double(c), as.integer(m), p=double(n*m),
-                PACKAGE="spatialkernel")$p
+                as.double(c), as.integer(m), p=double(n*m))$p
         p <- matrix(p, ncol=m)
         stat[i] <- sum(apply(p, 1, function(x) sum((x-alpha)^2)))
         if(!is.null(stpts)) {
             p <- .C("hatpn", as.double(stpts), as.integer(nstpts), as.double(pts),
                     as.integer(y2), as.integer(n), as.double(oph),
                     as.integer(adapt$kernel),
-                    as.double(c), as.integer(m), p=double(nstpts*m),
-                    PACKAGE="spatialkernel")$p
+                    as.double(c), as.integer(m), p=double(nstpts*m))$p
             tct[,i] <- (p-rep(alpha, each=nstpts))
         }
     }

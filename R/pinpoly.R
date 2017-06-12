@@ -38,11 +38,11 @@ pinpoly <- function(poly, pts)
         ans<-.Fortran("psnpoly", as.double(pts[,1]), as.double(pts[,2]),
                       as.integer(nrow(pts)), as.double(poly[,1]), as.double(poly[,2]),
 		      as.integer(nrow(poly)), 
-                      inout=integer(nrow(pts)), PACKAGE="spatialkernel")$inout
+                      inout=integer(nrow(pts)))$inout
     }else{
         ans<-.Fortran("pnpoly", as.double(pts[1]), as.double(pts[2]),
                       as.double(poly[,1]), as.double(poly[,2]), as.integer(nrow(poly)), 
-                      inout=as.integer(0), PACKAGE="spatialkernel")$inout
+                      inout=as.integer(0))$inout
     }
     ans + 1
 }

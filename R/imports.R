@@ -20,5 +20,5 @@
 #' @importFrom stats runif
 NULL
 
-#' @useDynLib spatialkernel
+#' @useDynLib spatialkernel, .registration=TRUE
 NULL
