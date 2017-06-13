@@ -9,7 +9,7 @@ Authors@R: c(
     person("Pingping", "Zheng", , "pingping.zheng@lancaster.ac.uk", "aut"),
     person("Peter", "Diggle", , "p.diggle@lancaster.ac.uk", c("aut", "cre")),
     person("Richard", "Cotton", , "richierocks@gmail.com", "ctb")
-)
+    )
 Maintainer: Virgilio Gomez-Rubio <Virgilio.Gomez@uclm.es>
 URL: https://github.com/datacamp/spatialkernel
 BugReports: https://github.com/datacamp/spatialkernel/issues
