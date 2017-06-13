@@ -180,3 +180,18 @@ plotmc <- function(obj, types=unique(obj$marks), quan=c(0.05, 0.95), sup=FALSE,
         if(m>1 && j<m && interactive()) readline("\nPress Enter to plot next one ...")
     }
 }
+
+
+spseg_wrapper = function(ppp, h, opt, ...){
+    pw = as.data.frame(spatstat::as.polygonal(ppp$win))
+    if(ncol(pw)>2){
+        stop("spseg can only handle simple ring windows")
+    }
+    
+    xypoly = as.matrix(pw)
+    pts = cbind(ppp$x, ppp$y)
+    m = spatstat::marks(ppp)
+    # test if only one mark
+    m = as.character(m)
+    spseg(pts, m, h=h, opt=opt, poly=xypoly)
+}

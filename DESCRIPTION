@@ -18,6 +18,7 @@ Imports:
     graphics,
     grDevices,
     roxygen2 (>= 6.0.1),
+    spatstat,
     stats
 Description: Edge-corrected kernel density estimation and binary kernel
         regression estimation for multivariate spatial point process
