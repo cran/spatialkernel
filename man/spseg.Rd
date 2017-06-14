@@ -27,8 +27,8 @@ spseg(pts, ...)
 \method{spseg}{ppp}(pts, h, opt, ...)
 }
 \arguments{
-\item{pts}{matrix containing the \code{x,y}-coordinates of the
-point locations at which type-specific probabilities estimated.}
+\item{pts}{an object that contains the points. This could be a two-column
+matrix or a ppp object from spatstat.}
 
 \item{marks}{numeric/character vector of the types of the point in the data.}
 
