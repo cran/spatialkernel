@@ -10,14 +10,13 @@ Authors@R: c(
     person("Peter", "Diggle", , "p.diggle@lancaster.ac.uk", c("aut", "cre")),
     person("Richard", "Cotton", , "richierocks@gmail.com", "ctb")
     )
-Maintainer: Virgilio Gomez-Rubio <Virgilio.Gomez@uclm.es>
+Maintainer: Richard Cotton <richierocks@gmail.com>
 URL: https://github.com/datacamp/spatialkernel
 BugReports: https://github.com/datacamp/spatialkernel/issues
 Depends: R (>= 1.9.0)
 Imports:
     graphics,
     grDevices,
-    roxygen2 (>= 6.0.1),
     spatstat,
     stats
 Description: Edge-corrected kernel density estimation and binary kernel
