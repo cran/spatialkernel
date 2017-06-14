@@ -1,8 +1,8 @@
 #' Integrated Functions for Spatial Segregation Analysis
 #' Spatial segregation analysis to be performed by a single function and
 #' presentations by associated \code{plot} functions.
-#' @param pts matrix containing the \code{x,y}-coordinates of the
-#'     point locations at which type-specific probabilities estimated.
+#' @param pts an object that contains the points. This could be a two-column
+#'     matrix or a ppp object from spatstat.
 #' @param marks numeric/character vector of the types of the point in the data.
 #' @param h numeric vector of the kernel smoothing bandwidth at which to
 #'     calculate the cross-validated log-likelihood function.
@@ -63,9 +63,10 @@
 #' @seealso \code{\link{cvloglk}}, \code{\link{phat}}, \code{\link{mcseg.test}}, 
 #'   \code{\link{pinpoly}}, \code{\link{risk.colors}}, and \code{\link{metre}}
 #' @keywords spatial nonparametric hplot
+#' @rdname spseg
 #' @export
-spseg <- function(pts, marks, h, opt=2, ntest=100, poly=NULL, 
-  delta=min(apply(apply(pts, 2, range), 2, diff))/100, proc=TRUE)
+spseg.matrix <- function(pts, marks, h, opt=2, ntest=100, poly=NULL, 
+  delta=min(apply(apply(pts, 2, range), 2, diff))/100, proc=TRUE, ...)
 {
 ##use data within a polygon 
 ##select bandwidth, calculate phat, and do MC test 
@@ -181,17 +182,36 @@ plotmc <- function(obj, types=unique(obj$marks), quan=c(0.05, 0.95), sup=FALSE,
     }
 }
 
+##' Run the spatial segregation analysis
+##'
+##' This is the details of the S3 generic method
+##' @title spseg
+##' @return spseg results
+##' @author Barry Rowlingson
+##' @rdname spseg
+##' @export
+spseg <- function(pts, ...){
+    UseMethod("spseg")
+}
 
-spseg_wrapper = function(ppp, h, opt, ...){
-    pw = as.data.frame(spatstat::as.polygonal(ppp$win))
+##' spseg for spatstat objects
+##'
+##' Does spseg for marked ppp objects
+##' @title spatial segregation for ppp objects
+##' @return an spseg object
+##' @author Barry Rowlingson
+##' @rdname spseg
+##' @export
+spseg.ppp = function(pts, h, opt, ...){
+    pw = as.data.frame(spatstat::as.polygonal(pts$win))
     if(ncol(pw)>2){
         stop("spseg can only handle simple ring windows")
     }
     
     xypoly = as.matrix(pw)
-    pts = cbind(ppp$x, ppp$y)
-    m = spatstat::marks(ppp)
+    pts = cbind(pts$x, pts$y)
+    m = spatstat::marks(pts)
     # test if only one mark
     m = as.character(m)
-    spseg(pts, m, h=h, opt=opt, poly=xypoly)
+    spseg.matrix(pts, m, h=h, opt=opt, poly=xypoly)
 }
