@@ -213,5 +213,5 @@ spseg.ppp = function(pts, h, opt, ...){
     m = spatstat::marks(pts)
     # test if only one mark
     m = as.character(m)
-    spseg.matrix(xypts, m, h=h, opt=opt, poly=xypoly)
+    spseg.matrix(xypts, m, h=h, opt=opt, poly=xypoly, ...)
 }
