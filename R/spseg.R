@@ -209,9 +209,9 @@ spseg.ppp = function(pts, h, opt, ...){
     }
     
     xypoly = as.matrix(pw)
-    pts = cbind(pts$x, pts$y)
+    xypts = cbind(pts$x, pts$y)
     m = spatstat::marks(pts)
     # test if only one mark
     m = as.character(m)
-    spseg.matrix(pts, m, h=h, opt=opt, poly=xypoly)
+    spseg.matrix(xypts, m, h=h, opt=opt, poly=xypoly)
 }
