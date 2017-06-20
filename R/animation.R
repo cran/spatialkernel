@@ -1,7 +1,6 @@
 ## time=(tic_interval, show_delay, from, to)
 ## fades: 0--no fading, n--n steps of fading
-animation<-function(xyt, poly=NULL, win=NULL, time=NULL,
-                    fades=0)
+animation <- function(xyt, poly=NULL, win=NULL, time=NULL, fades=0)
 { 
     if(is.null(poly)) {
         xyrng<-apply(xyt[,1:2], 2, range, na.rm=T)
@@ -19,5 +18,5 @@ animation<-function(xyt, poly=NULL, win=NULL, time=NULL,
     .C("animation", as.double(xyt), as.integer(dim(xyt)[1]),
        as.double(poly), as.integer(dim(poly)[1]),
        as.double(win), as.double(time), as.integer(fades),
-       PACKAGE="spatialkernel")
+       PACKAGE = "spatialkernel")
 }
