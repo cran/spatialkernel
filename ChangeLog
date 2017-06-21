@@ -16,3 +16,6 @@ Version 0.4-18
 Minor fixes in the C code for memory allocation. Changes in the
 licenses to comply with CRAN policies.
 
+Version 0.4-20
+Fix R CMD check failures.
+Rewrite docs using roxygen2.

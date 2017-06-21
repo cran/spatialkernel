@@ -21,8 +21,7 @@ kernelhat <- function(dpts, h, poly, win=apply(poly, 2, range),
         c <- rep(1, npts)
     ans <- .C("hat_lambda_c", as.double(pts), as.integer(npts),
               as.double(dpts), as.integer(ndpts), as.double(h),
-              as.integer(adapt$kernel), as.double(c), lam=double(npts),
-              PACKAGE="spatialkernel")$lam
+              as.integer(adapt$kernel), as.double(c), lam=double(npts), PACKAGE = "spatialkernel")$lam
     res[ndx] <- ans
     invisible(list(lambda=matrix(res, nrow=nx, ncol=ny), x=x, y=y,
                    dpts=dpts, h=h, poly=poly, win=win, delta=1, edge=edge))
