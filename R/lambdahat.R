@@ -1,8 +1,84 @@
+#' Kernel Density Estimation of Intensity Function
+#' 
+#' Kernel density estimation of the intensity function of a two-dimensional
+#' point process.
+#' @param pts matrix containing the \code{x,y}-coordinates of the
+#'     data point locations.
+#' @param h numeric value of the bandwidth used in the kernel smoothing.
+#' @param gpts matrix containing the \code{x,y}-coordinates of point
+#'     locations at which to calculate the intensity function, usually
+#'     a fine grid points within \code{poly}, default \code{NULL} to
+#'     estimate intensity function at data locations.
+#' @param poly matrix containing the \code{x,y}-coordinates of the
+#'     vertices of the polygon boundary in an anticlockwise order.
+#' @param edge logical, with default \code{TRUE} to do edge-correction.
+#' @details Kernel smoothing methods are widely used to estimate the intensity 
+#'   of a spatial point process. One problem which arises is the need to handle
+#'   edge effects. Several methods of edge-correction have been proposed. The
+#'   adjustment factor proposed in Berman and Diggle (1989) is a double
+#'   integration \eqn{\int_AK[(x-x_0)/h]/h^2}{int_AK[(x-x_0)/h]/h^2}, where 
+#'   \eqn{A} is a polygonal area, \eqn{K} is the smoothing kernel and \eqn{h} is
+#'   the bandwidth used for the smoothing. Zheng, P. \emph{et\ al} (2004)
+#'   proposed an algorithm for fast calculate of Berman and Diggle's adjustment 
+#'   factor.
+#'   
+#'   When \code{gpts} is \code{NULL}, \code{lambdahat} uses a leave-one-out
+#'   estimator for the intensity at each of the data points, as been suggested
+#'   in Baddeley \emph{et al} (2000). This leave-one-out estimate at each of the
+#'   data points then can be used in the inhomogeneous K function estimation 
+#'   \code{\link{kinhat}} when the true intensity function is unknown.
+#'   
+#'   The default kernel is the \emph{Gaussian}. The kernel function is selected
+#'   by calling \code{\link{setkernel}}.
+#' @return A list with components
+#' \describe{
+#'   \item{lambda}{numeric vector of the estimated intensity function.}
+#'   \item{...}{copy of the arguments \code{pts, gpts, h, poly, edge}.}
+#' }
+#' @references
+#' \enumerate{
+#'   \item M. Berman and P. Diggle (1989) Estimating weighted integrals of the
+#' second-order intensity of a spatial point process, \emph{J. R. Stat. Soc. B},
+#' \bold{51}, 81--92.
+#'   \item P. Zheng, P.A. Durr and P.J. Diggle (2004) Edge--correction for Spatial
+#' Kernel Smoothing --- When Is It Necessary? \emph{Proceedings of the GisVet 
+#' Conference 2004}, University of Guelph, Ontario, Canada, June 2004.
+#'   \item Baddeley, A. J. and M&#248;ller, J. and Waagepetersen R. (2000) Non and
+#' semi-parametric estimation of interaction in inhomogeneous point patterns,
+#' \emph{Statistica Neerlandica}, \bold{54}, 3, 329--350.
+#'   \item Laurie, D.P. (1982). Algorithm 584 CUBTRI: Adaptive Cubature over a
+#' Triangle. \emph{ACM--Trans. Math. Software}, \bold{8}, 210--218.
+#'   \item Jonathan R. Shewchuk, \emph{Triangle, a Two-Dimensional Quality Mesh
+#' Generator and Delaunay Triangulator} at
+#' \url{http://www-2.cs.cmu.edu/~quake/triangle.html}.
+#'   \item Alan Murta, \emph{General Polygon Clipper} at
+#' \url{http://www.cs.man.ac.uk/~toby/gpc}.
+#'   \item NAG's Numerical Library. \emph{Chapter 11: Quadrature}, NAG's Fortran
+#' 90 Library.
+#' \url{http://www.nag.co.uk/numeric/fn/manual/html/c11_fn03.html}
+#' }
+#' @note In principle, the \emph{double adaptive} double integration algorithm 
+#'   of Zheng, P. \emph{et\ al} (2004) can be applied to other kernel functions.
+#'   Furthermore, the area at the present is enclosed by a simple polygon which
+#'   could be generalized into a complex area with polygonal holes inside. For
+#'   instance, a large lake lays within the land area of study.
+#' 
+#' Other source codes used in the implementation of the double integration 
+#' algorithm include
+#' \itemize{
+#'   \item Laurie, D.P. (1982) \emph{adaptive cubature} code in Fortran;
+#'   \item Shewchuk, J.R. \emph{triangulation} code in C;
+#'   \item Alan Murta's \emph{polygon intersection} code in C 
+#' (\emph{Project: Generic Polygon Clipper}).
+#' }
+#' @seealso \code{\link{setkernel}}, \code{\link{kinhat}}, \code{\link{density}}
+#' @keywords nonparametric smooth regression multivariate spatial
+#' @export
+lambdahat <- function(pts, h, gpts=NULL, poly=NULL, edge=TRUE)
+{
 ## kernel density estimation of \hat\lambda
 ## should be divided by |A| so that N(A) follows a Poisson with mean lambda*|A|
 ## See Peter (2003), pp47 homogeneous Poisson process definition
-lambdahat<-function(pts, h, gpts=NULL, poly=NULL, edge=TRUE)
-{
   adapt <- chkernel()
   npts <- nrow(pts)
   if(is.null(gpts)) { ##Baddeley's modified version
@@ -15,25 +91,25 @@ lambdahat<-function(pts, h, gpts=NULL, poly=NULL, edge=TRUE)
     if(edge) c <- adaptpoly(gpts, h, poly)$c else c <- rep(1, ngpts)
     ans <- .C("hat_lambda_c", as.double(gpts), as.integer(ngpts),
             as.double(pts), as.integer(npts), as.double(h),
-            as.integer(adapt$kernel), as.double(c), lam=double(ngpts),
+            as.integer(adapt$kernel), as.double(c), lam=double(ngpts), 
             PACKAGE="spatialkernel")$lam
   }
   invisible(list(lambda=ans, pts=pts, gpts=gpts, poly=poly, h=h, edge=edge))
 }
 
-adaptpoly<-function(pts, h, poly) 
+adaptpoly <- function(pts, h, poly) 
 {
     c1 <- 10; eps <- 0.0001; mcalls <- 10000
     adapt <- chkernel()
 	if(adapt$kernel==1) c2 <- 20 else c2 <- 1
     rng <- c(range(poly[,1]), range(poly[,2]))
     if(is.null(nrow(pts))) npts <- 1 else npts <- nrow(pts)
-    ans<-.C("adaptpoly", as.double(poly), as.integer(nrow(poly)), as.double(pts),
+    ans<-.C("adapt_poly", as.double(poly), as.integer(nrow(poly)), as.double(pts),
             as.integer(npts), as.double(h), as.integer(adapt$kernel),
             as.double(c1), as.double(c2), as.double(rng),
             as.double(eps), err=double(npts), as.integer(mcalls),
-            ncalls=integer(npts), ier=integer(6), c=double(npts),
-			PACKAGE="spatialkernel")
-    invisible(list(c=ans$c, err=ans$err, ncalls=ans$ncalls, ier=ans$ier,
+            ncalls=integer(npts), ier=integer(6), cxh=double(npts), 
+            PACKAGE="spatialkernel")
+    invisible(list(c=ans$cxh, err=ans$err, ncalls=ans$ncalls, ier=ans$ier,
         pts=pts, h=h, poly=poly))
 }

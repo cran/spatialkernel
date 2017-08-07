@@ -1,17 +1,56 @@
 Package: spatialkernel
-Version: 0.4-19
-Date: 2013-03-26
-Title: Nonparameteric estimation of spatial segregation in a
-        multivariate point process
-Encoding: latin1
-Author: Pingping Zheng and Peter Diggle
-Maintainer: Virgilio Gomez-Rubio <Virgilio.Gomez@uclm.es>
-Depends: R (>= 1.9.0)
+Version: 0.4-22
+Date: 2017-08-07
+Title: Non-Parametric Estimation of Spatial Segregation in a
+        Multivariate Point Process
+Authors@R: c(
+    person("Virgilio", "Gómez-Rubio", , "Virgilio.Gomez@uclm.es", c("aut", "cre")),
+    person("Pingping", "Zheng", , , "aut"),
+    person("Peter", "Diggle", , "p.diggle@lancaster.ac.uk", c("aut", "cph")),
+    person("Richard", "Cotton", , "richierocks@gmail.com", "ctb"),
+    person("Alan", "Murta", , , c("ctb", "cph")),
+    person("Jonathan Richard", "Shewchuk", , , c("ctb", "cph")), 
+    person("Barry", "Rowlingson", , , c("ctb", "cph")),
+    person("Wm. Randolph", "Franklin", , , c("ctb", "cph")),
+    person("David C.", "Sterratt", role=c("cph","aut"),
+    email="david.c.sterratt@ed.ac.uk"),
+    person("Elias", "Pipping", role=c("ctb")),
+    person("Roger D.", "Peng", , "rpeng@jhsph.edu", c("aut")),
+    person("Duncan", "Murdoch", , , c("aut")),
+    person("Barry", "Rowlingson", , , c("aut"))
+    )
+Copyright: 1991-3 Barry Rowlingson and Peter Diggle; 1997-1999 Advanced
+        Interfaces Group, University of Manchester; 1993, 1995, 1997,
+        1998, 2002, 2005 Jonathan Richard Shewchuk; 1970-2003, Wm.
+        Randolph Franklin; 2011-2017 David Sterratt
+URL: https://github.com/becarioprecario/spatialkernel
+BugReports: https://github.com/becarioprecario/spatialkernel/issues
+Depends: R (>= 2.10)
+Imports: graphics, grDevices, spatstat, stats
+Suggests: splancs
 Description: Edge-corrected kernel density estimation and binary kernel
         regression estimation for multivariate spatial point process
-        data
-License: CC BY-NC-SA 3.0 + file LICENSE
-Packaged: 2013-03-26 10:22:21 UTC; virgil
+        data. For details, see Diggle, P.J., Zheng, P. and Durr, P. A. (2005)
+        <doi:10.1111/j.1467-9876.2005.05373.x>.
+License: CC BY-NC-SA 4.0
+Encoding: UTF-8
 NeedsCompilation: yes
+LazyData: true
+RoxygenNote: 6.0.1
+Packaged: 2017-08-07 19:15:25 UTC; virgil
+Author: Virgilio Gómez-Rubio [aut, cre],
+  Pingping Zheng [aut],
+  Peter Diggle [aut, cph],
+  Richard Cotton [ctb],
+  Alan Murta [ctb, cph],
+  Jonathan Richard Shewchuk [ctb, cph],
+  Barry Rowlingson [ctb, cph],
+  Wm. Randolph Franklin [ctb, cph],
+  David C. Sterratt [cph, aut],
+  Elias Pipping [ctb],
+  Roger D. Peng [aut],
+  Duncan Murdoch [aut],
+  Barry Rowlingson [aut]
+Maintainer: Virgilio Gómez-Rubio <Virgilio.Gomez@uclm.es>
 Repository: CRAN
-Date/Publication: 2013-03-26 12:15:58
+Date/Publication: 2017-08-07 23:44:52 UTC

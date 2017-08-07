@@ -9,7 +9,7 @@ c-------------------------------------------------------------------------
 c
 c find the area of the polygon defined by points in xp,yp
 c
-      implicit real*8 (a-h,o-z)
+      implicit real(8) (a-h,o-z)
 
       dimension xp(np+1),yp(np+1)
 
@@ -44,7 +44,7 @@ CCCCCCCCCCCCCCCCCCCCCC
 c
 c which of the variable width bins s is t in?
 c
-      implicit real*8 (a-h,o-z)
+      implicit real(8) (a-h,o-z)
 
       dimension s(ns)
 
@@ -72,7 +72,7 @@ c             real numbers
 c             on output first n elements of x are sorted from smallest      
 c             to largest                                                    
 c                                                                           
-      implicit real*8 (a-h,o-z)                                             
+      implicit real(8) (a-h,o-z)                                             
       dimension x(n)                                                        
       i=1                                                                   
     1 i=i+1                                                                 
@@ -105,9 +105,9 @@ c
 c fortran version of C routine by Ken McElvain
 c
 
-      implicit real*8 (a-h,o-z)
+      implicit real(8) (a-h,o-z)
       common /bounds/area,iconvx
-      real*8 area
+      real(8) area
       integer iconvx
 
 
@@ -154,7 +154,7 @@ c
 c
 c determine which quadrant xp,yp is in relative to xo,yo as origin
 c
-      implicit real*8 (a-h,o-z)
+      implicit real(8) (a-h,o-z)
 
         if(xp.lt.xo)then
                 if(yp.lt.yo) then
@@ -180,9 +180,9 @@ c compute the weight given to a point at x,y according to how much
 c of a circle of radius r is inside the bounding polygon
 c 
 c
-      implicit real*8 (a-h,o-z)
+      implicit real(8) (a-h,o-z)
       common /bounds/area,iconvx
-      real*8 area
+      real(8) area
       integer iconvx
       dimension xp(np+1),yp(np+1)
       parameter(pi=3.141592654d0)
@@ -342,7 +342,7 @@ c weight is proportion of total angle in the poly
 
       integer function isig8(value,tiny)
 c return the sign (+1,0,-1) of a value
-            real*8 tiny,value
+            real(8) tiny,value
           if (value.gt.tiny) then
             isig8 = 1
           else if (value.lt.-tiny) then
@@ -358,10 +358,10 @@ CCCCCCCCCCCCCCCCCCCCCCCCCCCC
 c
 c find the weight for the point at x,y, radius r
 c
-      implicit real*8 (a-h,o-z)
+      implicit real(8) (a-h,o-z)
 
       common /bounds/area,iconvx
-      real*8 area
+      real(8) area
       integer iconvx
 
       dimension xp(np+1),yp(np+1)
@@ -379,11 +379,11 @@ C x,y pts, z=lambda(x,y), xp, yp polygon
 
       subroutine trykh(x,y,n,z,xp,yp,np,s,ns,hkhat,icounts,hkhats,nptns)
 
-      implicit real*8(a-h,o-z)
-      real*8 wij, wji
+      implicit real(8) (a-h,o-z)
+      real(8) wij, wji
 
       common /bounds/area,iconvx
-      real*8 area
+      real(8) area
       integer iconvx
 
       dimension x(n),y(n),xp(np+1),yp(np+1),s(ns),hkhat(ns)
@@ -457,11 +457,11 @@ C khat calculated at s[ns]
 
       subroutine dokinhat(x,y,n,z,xp,yp,np,s,ns,hkhat)
 
-      implicit real*8(a-h,o-z)
+      implicit real(8) (a-h,o-z)
       double precision wij, wji
 
       common /bounds/area,iconvx
-      real*8 area
+      real(8) area
       integer iconvx
 
       dimension x(n),y(n),z(n),xp(np+1),yp(np+1),s(ns),hkhat(ns)

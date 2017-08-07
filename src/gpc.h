@@ -1,4 +1,9 @@
 /*
+
+
+Modified file src/gpc.c from package gpclib 1.5-5.
+
+
 ===========================================================================
 
 Project:   Generic Polygon Clipper
@@ -8,10 +13,10 @@ Project:   Generic Polygon Clipper
 
 File:      gpc.h
 Author:    Alan Murta (email: gpc@cs.man.ac.uk)
-Version:   2.31
-Date:      4th June 1999
+Version:   2.32
+Date:      17th December 2004
 
-Copyright: (C) 1997-1999, Advanced Interfaces Group,
+Copyright: (C) 1997-2004, Advanced Interfaces Group,
            University of Manchester.
 
            This software is free for non-commercial use. It may be copied,
@@ -46,7 +51,7 @@ Copyright: (C) 1997-1999, Advanced Interfaces Group,
 
 #define GPC_EPSILON (DBL_EPSILON)
 
-#define GPC_VERSION "2.31"
+#define GPC_VERSION "2.32"
 
 
 /*
@@ -88,6 +93,7 @@ typedef struct                      /* Tristrip set structure            */
   gpc_vertex_list    *strip;        /* Tristrip array pointer            */
 } gpc_tristrip;
 
+
 /*
 ===========================================================================
                        Public Function Prototypes
@@ -111,13 +117,6 @@ void gpc_polygon_clip        (gpc_op           set_operation,
                               gpc_polygon     *clip_polygon,
                               gpc_polygon     *result_polygon);
 
-void creat_simple_polygon(double *x, double *y, int *n,
-			  gpc_polygon *p);
-
-void simple_polygon_clip(double *sub_x, double *sub_y, int *sub_n,
-			 double *clip_x, double *clip_y, int *clip_n,
-			 double *res_x, double *res_y, int *res_n);
-
 void gpc_tristrip_clip       (gpc_op           set_operation,
                               gpc_polygon     *subject_polygon,
                               gpc_polygon     *clip_polygon,
@@ -129,6 +128,15 @@ void gpc_polygon_to_tristrip (gpc_polygon     *polygon,
 void gpc_free_polygon        (gpc_polygon     *polygon);
 
 void gpc_free_tristrip       (gpc_tristrip    *tristrip);
+
+void creat_simple_polygon(double *x, double *y, int *n,
+                          gpc_polygon *p);
+
+void simple_polygon_clip(double *sub_x, double *sub_y, int *sub_n,
+                         double *clip_x, double *clip_y, int *clip_n,
+                         double *res_x, double *res_y, int *res_n);
+
+
 
 #endif
 
