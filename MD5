@@ -1,5 +1,5 @@
 ded505ef7b7ae5fcdb156241eaec44dd *ChangeLog
-e7d00cd040f0167cd08c46fabdbdd9bf *DESCRIPTION
+d679bdd6c301a2a7d803c888defe9b64 *DESCRIPTION
 5366ad9cf8825cdeb6bbb6d908a17b39 *LICENSE.note
 68c931f9f2fbede883874d6daff35862 *NAMESPACE
 bbb5e4720ef57e930c55bc918ce0d36f *R/animation.R
@@ -23,7 +23,7 @@ def61c66fcc2237aad711dddfc05aa3e *R/phat.R
 88b5420f7132a50c4da85dac23019969 *R/spseg.R
 0e6aa6b0d7fda974a6df80556d6fce1d *R/varphat.R
 b1ced77c7dc08035a40ec2e136216a54 *R/zzz.R
-10aec0f89363d1cc9d700888b5a9e296 *README.md
+9e8a29c9b16b4cabff3be153897069d7 *README.md
 f6deacc905a6fe04fd560369095d154e *data/lansing.rda
 55ceb002be2b710f9d04fbba1b86c504 *data/polyb.rda
 d0cb94ad12491ab32e679d1b2a500303 *inst/doc/cv.png
@@ -63,5 +63,5 @@ ebeb708659e9aaaf33561d1f4e4fe6db *src/pnp.f
 67b68a876343c0d0fe79331c30564531 *src/risk.c
 33aafa7d327df08820f6260b062ec285 *src/risk.h
 1cca41112be448af71da6bb7b02a76e2 *src/spatialkernel_init.c
-d8fe56d7d4af0456597c3cf5d45b87e3 *src/triangle.c
+48cb9dacb96fbaeb42a91d081e48bb9c *src/triangle.c
 2bdcd1842a0f45d6bcb060c9064f2576 *src/triangle.h

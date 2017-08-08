@@ -1,6 +1,6 @@
 Package: spatialkernel
-Version: 0.4-22
-Date: 2017-08-07
+Version: 0.4-23
+Date: 2017-08-08
 Title: Non-Parametric Estimation of Spatial Segregation in a
         Multivariate Point Process
 Authors@R: c(
@@ -37,7 +37,7 @@ Encoding: UTF-8
 NeedsCompilation: yes
 LazyData: true
 RoxygenNote: 6.0.1
-Packaged: 2017-08-07 19:15:25 UTC; virgil
+Packaged: 2017-08-08 12:35:41 UTC; virgil
 Author: Virgilio Gómez-Rubio [aut, cre],
   Pingping Zheng [aut],
   Peter Diggle [aut, cph],
@@ -53,4 +53,4 @@ Author: Virgilio Gómez-Rubio [aut, cre],
   Barry Rowlingson [aut]
 Maintainer: Virgilio Gómez-Rubio <Virgilio.Gomez@uclm.es>
 Repository: CRAN
-Date/Publication: 2017-08-07 23:44:52 UTC
+Date/Publication: 2017-08-08 13:12:52 UTC
